@@ -1,7 +1,6 @@
 """Pipeline controller that orchestrates all analysis steps."""
 
 import logging
-from typing import Any
 
 import numpy as np
 
