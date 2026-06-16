@@ -8,11 +8,15 @@ from vegcover.models import DetectResult
 class TestVegetationDetector:
     def test_init_default_model(self):
         detector = VegetationDetector()
+        assert detector.model_path == "yolov8n.pt"
         assert detector.confidence_threshold == 0.25
         assert detector.iou_threshold == 0.45
 
     def test_init_custom_params(self):
-        detector = VegetationDetector(confidence_threshold=0.5, iou_threshold=0.6)
+        detector = VegetationDetector(
+            model_path="custom.pt", confidence_threshold=0.5, iou_threshold=0.6
+        )
+        assert detector.model_path == "custom.pt"
         assert detector.confidence_threshold == 0.5
         assert detector.iou_threshold == 0.6
 
