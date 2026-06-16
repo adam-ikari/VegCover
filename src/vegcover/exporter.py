@@ -1,5 +1,6 @@
 """Export module for charts and data files."""
 
+import csv
 import json
 import logging
 import os
@@ -108,8 +109,6 @@ class ResultExporter:
 
     def _export_csv(self, coverage, output_path: Path):
         """Export statistics to CSV."""
-        import csv
-
         with open(output_path, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["Category", "Pixels", "Ratio", "Area (m2)"])
