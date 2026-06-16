@@ -4,13 +4,12 @@ Launch with: python main.py
 """
 
 import logging
-import tempfile
-from pathlib import Path
 
 import gradio as gr
 import numpy as np
 from PIL import Image
 
+from vegcover.detector import VegetationDetector
 from vegcover.models import AnalysisResult
 from vegcover.pipeline import AnalysisPipeline
 
@@ -19,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def process_images(
-    image_files: list,
+    image_files: list[str],
     confidence_threshold: float = 0.25,
     iou_threshold: float = 0.45,
     gsd: float | None = None,
@@ -33,10 +32,10 @@ def process_images(
         gsd: Ground sampling distance (m/pixel).
 
     Returns:
-        Tuple of (annotated_image, heatmap, pie_chart, bar_chart, csv_path, json_path)
+        Tuple of (annotated_image, heatmap, pie_chart, bar_chart, csv_path, json_path, status_msg)
     """
     if not image_files:
-        return [None] * 6 + ["Please upload at least one image."]
+        return None, None, None, None, None, None, "Please upload at least one image."
 
     # Load images
     images = []
@@ -44,8 +43,12 @@ def process_images(
         img = Image.open(file_path).convert("RGB")
         images.append(np.array(img))
 
-    # Run pipeline
-    pipeline = AnalysisPipeline()
+    # Run pipeline with custom detector parameters
+    detector = VegetationDetector(
+        confidence_threshold=confidence_threshold,
+        iou_threshold=iou_threshold,
+    )
+    pipeline = AnalysisPipeline(detector=detector)
     result = pipeline.run(images, gsd=gsd)
 
     # Prepare outputs

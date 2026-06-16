@@ -1,6 +1,12 @@
+import sys
+from pathlib import Path
+
 import numpy as np
 import pytest
 from unittest.mock import MagicMock, patch
+
+# Add project root to path for importing main.py
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from vegcover.models import AnalysisResult, Box, CategoryStat, CoverageStat, DetectResult, StitchResult, VegIndexMap
 
