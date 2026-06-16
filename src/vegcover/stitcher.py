@@ -13,9 +13,8 @@ logger = logging.getLogger(__name__)
 class PhotoStitcher:
     """Stitches multiple aerial photos into a panorama."""
 
-    def __init__(self, feature_threshold: float = 0.5, blend_mode: str = "multiband"):
-        self.feature_threshold = feature_threshold
-        self.blend_mode = blend_mode
+    def __init__(self):
+        pass
 
     def stitch(self, images: list[np.ndarray]) -> StitchResult:
         """Stitch multiple images into a panorama.
@@ -53,6 +52,7 @@ class PhotoStitcher:
                 panorama=panorama,
                 success=True,
                 error_msg=None,
+                # transform_matrices reserved for future homography matrix extraction
                 transform_matrices=[],
             )
 

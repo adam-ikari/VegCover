@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+from vegcover.models import StitchResult
 from vegcover.stitcher import PhotoStitcher
 
 
@@ -30,15 +31,17 @@ class TestPhotoStitcher:
         img2[:, :50] = img1[:, 50:]
 
         result = stitcher.stitch([img1, img2])
-        # Note: OpenCV Stitcher may not always succeed with synthetic images
-        if result.success:
-            assert result.panorama is not None
-            assert result.panorama.shape[0] > 0
+        # OpenCV Stitcher may not always succeed with synthetic images.
+        # When it succeeds, the panorama should be a valid image.
+        # When it fails, it should fall back gracefully (returning first image).
+        assert result.panorama is not None
+        assert result.panorama.shape[0] > 0
+        # If stitching failed, error_msg should be set
+        if not result.success:
+            assert result.error_msg is not None
 
     def test_stitch_result_type(self):
         """Stitch result should be a StitchResult dataclass."""
-        from vegcover.models import StitchResult
-
         stitcher = PhotoStitcher()
         img = np.zeros((100, 100, 3), dtype=np.uint8)
         result = stitcher.stitch([img])
