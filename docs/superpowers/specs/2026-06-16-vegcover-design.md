@@ -9,7 +9,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 
 ## 需求
 
-- **界面**: Gradio Web GUI
+- **界面**: 桌面 GUI (tkinter)
 - **拼接**: 自动特征匹配（OpenCV Stitcher，ORB 特征）
 - **植被识别**: YOLO 预训练模型起步 + 支持加载自定义 .pt 模型
 - **植被指数**: RGB 照片使用 ExG（过量绿指数）和 VARI（可见光抗大气植被指数）
@@ -21,7 +21,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 ### 整体数据流
 
 ```
-用户上传 → [Stitcher] → [YOLO Detector] → [VegIndex Calc] → [Stats] → [Gradio UI]
+用户上传 → [Stitcher] → [YOLO Detector] → [VegIndex Calc] → [Stats] → [桌面 GUI]
 ```
 
 1. 用户上传多张 RGB 航拍照片
@@ -97,17 +97,17 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 
 所有导出文件打包到输出目录，UI 上提供单独下载按钮。
 
-## UI 设计 (Gradio)
+## UI 设计 (tkinter 桌面应用)
 
-单页应用，三个区域：
+单窗口桌面应用，三个区域：
 
-1. **输入区**: 拖拽上传多张航拍照片，预览缩略图
-2. **参数配置区**: 拼接参数、检测参数、植被指数参数、导出参数（默认折叠，大部分有默认值）
+1. **输入区**: 选择多张航拍照片，预览缩略图
+2. **参数配置区**: 拼接参数、检测参数、植被指数参数、导出参数
 3. **结果展示区**: 四个 Tab 切换
    - 拼接结果：全景图预览
    - 植被标注：全景图 + YOLO 框 + 掩膜叠加
    - 统计图表：饼图 + 柱状图 + 热力图
-   - 数据导出：报表预览 + 下载按钮
+   - 数据导出：报表预览 + 导出按钮
 
 **交互**: 分析过程后台线程运行，进度条显示当前步骤，大图支持缩放。
 
@@ -116,7 +116,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 ```
 VegCover/
 ├── pyproject.toml
-├── main.py                  # 入口：启动 Gradio 应用
+├── main.py                  # 入口：启动 tkinter 桌面应用
 ├── src/
 │   └── vegcover/
 │       ├── __init__.py
@@ -136,7 +136,7 @@ VegCover/
 
 | 包 | 用途 |
 |---|------|
-| `gradio` | Web GUI 框架 |
+| `tkinter` | 桌面 GUI 框架 (Python 标准库) |
 | `opencv-python` | 图像拼接、特征匹配、绘制 |
 | `ultralytics` | YOLOv8/v11 模型推理 |
 | `numpy` | 数值计算 |
