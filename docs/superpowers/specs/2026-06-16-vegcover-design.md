@@ -9,7 +9,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 
 ## 需求
 
-- **界面**: 桌面 GUI (tkinter)
+- **界面**: 桌面 GUI (PyQt6)
 - **拼接**: 自动特征匹配（OpenCV Stitcher，ORB 特征）
 - **植被识别**: YOLO 预训练模型起步 + 支持加载自定义 .pt 模型
 - **植被指数**: RGB 照片使用 ExG（过量绿指数）和 VARI（可见光抗大气植被指数）
@@ -97,7 +97,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 
 所有导出文件打包到输出目录，UI 上提供单独下载按钮。
 
-## UI 设计 (tkinter 桌面应用)
+## UI 设计 (PyQt6 桌面应用)
 
 单窗口桌面应用，三个区域：
 
@@ -116,7 +116,7 @@ VegCover 是一个桌面端航拍照片分析工具，将多张 RGB 航拍照片
 ```
 VegCover/
 ├── pyproject.toml
-├── main.py                  # 入口：启动 tkinter 桌面应用
+├── main.py                  # 入口：启动 PyQt6 桌面应用
 ├── src/
 │   └── vegcover/
 │       ├── __init__.py
@@ -136,7 +136,7 @@ VegCover/
 
 | 包 | 用途 |
 |---|------|
-| `tkinter` | 桌面 GUI 框架 (Python 标准库) |
+| `PyQt6` | 桌面 GUI 框架 |
 | `opencv-python` | 图像拼接、特征匹配、绘制 |
 | `ultralytics` | YOLOv8/v11 模型推理 |
 | `numpy` | 数值计算 |
