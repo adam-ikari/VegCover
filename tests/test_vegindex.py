@@ -62,3 +62,16 @@ class TestVegetationIndexCalculator:
 
         result = calc.compute(img)
         assert result.veg_ratio < 0.2
+
+    def test_yellow_image_detected_as_vegetation(self):
+        """Yellow leaves should be detected as vegetation."""
+        calc = VegetationIndexCalculator()
+        img = np.zeros((50, 50, 3), dtype=np.uint8)
+        # Yellow: R high, G high, B low
+        img[:, :, 0] = 220  # Red
+        img[:, :, 1] = 180  # Green
+        img[:, :, 2] = 50   # Blue
+
+        result = calc.compute(img)
+        # Yellow vegetation should be detected
+        assert result.veg_ratio > 0.5
